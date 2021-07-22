@@ -18,5 +18,10 @@
             "name": "zrone",
             "email": "xujining2008@126.com"
         }
-    ]
+    ],
+    "extra": {
+        "hyperf": {
+            "config": "Zrone\\HyperfWorkflow\\ConfigProvider"
+        }
+    }
 }
