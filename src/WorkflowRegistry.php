@@ -56,6 +56,23 @@ class WorkflowRegistry
         return $this->registry;
     }
 
+    public function uml() : array
+    {
+        $definitions = [];
+        foreach ($this->config as $workflow) {
+            $definitionBuilder = new DefinitionBuilder();
+
+            list($storage, $prepareTrans) = $this->buildTransition($workflow['transitions'], $workflow['attaches']);
+
+            $definitions[$workflow['name']] = $definitionBuilder->addPlaces($workflow['places'])
+                ->addTransitions($prepareTrans)
+                ->setMetadataStore($this->buildMetadataStore($workflow['places_metadata'], $storage))
+                ->build();
+        }
+
+        return $definitions;
+    }
+
     /**
      * 触发器
      *
