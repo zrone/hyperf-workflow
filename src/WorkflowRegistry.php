@@ -87,8 +87,8 @@ class WorkflowRegistry
         $prepareTrans = [];
 
         foreach ($transitions as $transition) {
-            $transition = new Transition($transitions['name'], $transitions['from'], $transitions['to'], $transitions['event']);
-            isset($attach[$transitions['name']]) && $storage->attach($transition, ['label' => $attach[$transitions['name']]]);
+            $transition = new Transition($transition['name'], $transition['from'], $transition['to'], $transition['event']);
+            isset($attach[$transition['name']]) && $storage->attach($transition, ['label' => $attach[$transition['name']]]);
 
             $prepareTrans[] = $transition;
         }
