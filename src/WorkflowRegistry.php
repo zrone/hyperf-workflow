@@ -86,9 +86,9 @@ class WorkflowRegistry
         $storage = new \SplObjectStorage();
         $prepareTrans = [];
 
-        foreach ($transitions as $transition) {
-            $transition = new Transition($transition['name'], $transition['from'], $transition['to'], $transition['event']);
-            isset($attach[$transition['name']]) && $storage->attach($transition, ['label' => $attach[$transition['name']]]);
+        foreach ($transitions as $transConfig) {
+            $transition = new Transition($transConfig['name'], $transConfig['from'], $transConfig['to'], $transConfig['event']);
+            isset($attach[$transConfig['name']]) && $storage->attach($transition, ['label' => $attach[$transConfig['name']]]);
 
             $prepareTrans[] = $transition;
         }
