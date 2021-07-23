@@ -68,7 +68,7 @@ class WorkflowRegistry
         foreach ($dispatcher as $eventName => $closure) {
             if (!in_array(sprintf("workflow.%s", $eventName), WorkflowEvents::ALIASES) || !method_exists($closure[0], $closure[1])) continue;
             $dispatcher->addListener($eventName, function () use ($closure) {
-                call_user_func($closure);
+                call_user_func(array(new $closure[0], $closure[1]));
             });
         }
         return $dispatcher;
