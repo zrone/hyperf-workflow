@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 return [
     [
+        'name' => 'workflow_name',
         // 状态
         'places' => [
             'draft',
@@ -17,9 +18,9 @@ return [
         ],
         // 工作流
         'transitions' => [
-            ['name' => 'to_review', 'from' => 'draft', 'to' => 'reviewed'],
-            ['name' => 'publish', 'from' => 'reviewed', 'to' => 'published'],
-            ['name' => 'reject', 'from' => 'reviewed', 'to' => 'rejected'],
+            ['name' => 'to_review', 'from' => 'draft', 'to' => 'reviewed', 'event' => null],
+            ['name' => 'publish', 'from' => 'reviewed', 'to' => 'published', 'event' => null],
+            ['name' => 'reject', 'from' => 'reviewed', 'to' => 'rejected', 'event' => null],
         ],
         // uml 备注信息
         'attaches' => [
@@ -35,16 +36,12 @@ return [
         ],
         // 工作流工作每次只允许改变到下一级状态，不允许一个工作流跳跃多个place
         'single_state' => true,
-        // 标记字段的名称
+        // 关联 model
+        'model' => Model::class,
+        // model标记状态的字段名
         'property' => 'state',
         'dispatcher' => [
-            'guard' => null,
-            'leave' => null,
-            'transition' => null,
-            'enter' => null,
-            'entered' => null,
-            'completed' => null,
-            'announce' => null,
+            'guard' => null
         ],
     ]
 ];

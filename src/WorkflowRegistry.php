@@ -5,13 +5,13 @@ namespace Zrone\HyperfWorkflow;
 
 use Hyperf\Contract\ConfigInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Workflow\DefinitionBuilder;
-use Symfony\Component\Workflow\Metadata\InMemoryMetadataStore;
-use Symfony\Component\Workflow\Registry;
-use Symfony\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
-use Symfony\Component\Workflow\Transition;
-use Symfony\Component\Workflow\Workflow;
-use Symfony\Component\Workflow\WorkflowEvents;
+use Zrone\Component\Workflow\DefinitionBuilder;
+use Zrone\Component\Workflow\Metadata\InMemoryMetadataStore;
+use Zrone\Component\Workflow\Registry;
+use Zrone\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
+use Zrone\Component\Workflow\Transition;
+use Zrone\Component\Workflow\Workflow;
+use Zrone\Component\Workflow\WorkflowEvents;
 
 /**
  * 工作流注册机
@@ -48,7 +48,7 @@ class WorkflowRegistry
                     ->build();
 
                 $marking = new MarkingStore((bool)$workflow['single_state'], $workflow['property']);
-                $wfInstance = new Workflow($definition, $marking, $this->buildDispatcher($workflow['dispatcher']));
+                $wfInstance = new Workflow($definition, $marking, $this->buildDispatcher($workflow['dispatcher']), $workflow['name']);
                 $this->registry->addWorkflow($wfInstance, new InstanceOfSupportStrategy($workflow['model']));
             }
         }
@@ -66,7 +66,7 @@ class WorkflowRegistry
         $dispatcher = new EventDispatcher();
 
         foreach ($dispatcher as $eventName => $closure) {
-            if (!in_array($eventName, WorkflowEvents::ALIASES) || method_exists($closure[0], $closure[1])) continue;
+            if (!in_array(sprintf("workflow.%s", $eventName), WorkflowEvents::ALIASES) || !method_exists($closure[0], $closure[1])) continue;
             $dispatcher->addListener($eventName, function () use ($closure) {
                 call_user_func($closure);
             });
@@ -87,7 +87,7 @@ class WorkflowRegistry
         $prepareTrans = [];
 
         foreach ($transitions as $transition) {
-            $transition = new Transition($transitions['name'], $transitions['from'], $transitions['to']);
+            $transition = new Transition($transitions['name'], $transitions['from'], $transitions['to'], $transitions['event']);
             isset($attach[$transitions['name']]) && $storage->attach($transition, ['label' => $attach[$transitions['name']]]);
 
             $prepareTrans[] = $transition;

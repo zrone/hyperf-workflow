@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 namespace Zrone\HyperfWorkflow;
 
-use Symfony\Component\Workflow\Marking;
-use Symfony\Component\Workflow\MarkingStore\MarkingStoreInterface;
+use Zrone\Component\Workflow\Marking;
+use Zrone\Component\Workflow\MarkingStore\MarkingStoreInterface;
 
 /**
  * MethodMarkingStore stores the marking with a subject's method.
