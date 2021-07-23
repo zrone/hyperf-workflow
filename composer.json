@@ -13,7 +13,7 @@
             "Zrone\\HyperfWorkflow\\": "src/"
         }
     },
-    "bin": [],
+    "bin": ["bin/workflow", "bin/workflow.exe"],
     "authors": [
         {
             "name": "zrone",
