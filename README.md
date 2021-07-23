@@ -123,15 +123,17 @@ return [
 windows Graphviz 安装包 https://pan.baidu.com/s/1oH7S2hIat8a7_qeQkiv78w 提取码: 5t1h 
 
 #### Liunx & Mac
+下载 ```workflow``` 到项目根目录 链接：https://pan.baidu.com/s/1eaRybp_evIzppfDPaqBw6A 提取码：7p9l
 在项目根目录下 ```projectDir``` 执行命令生成uml
 ```angular2html
-vendor/bin/workflow
+workflow
 ```
 
 #### Windows
-在项目根目录下 ```projectDir``` 执行命令生成uml
+下载 ```workflow.exe``` 到项目根目录 链接：https://pan.baidu.com/s/1eaRybp_evIzppfDPaqBw6A 提取码：7p9l
+在项目根目录下 ```projectDir``` 执行程序即可生成uml
 ```angular2html
-vendor/bin/workflow.exe
+workflow.exe
 ```
 
 生成的目录在 ```projectDir/uml``` 下
